@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Akshay</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+body{margin:0}
+/* Layout: a single-column academic homepage, with an SRE-style incident timeline as the schedule table */
+:root {
+  --bg: #f6f8f9;
+  --surface: #ffffff;
+  --ink: #17222b;
+  --muted: #586771;
+  --rule: #d9e1e5;
+  --accent: #0d6e66;
+  --accent-soft: #e2f1ef;
+  --c-work: #dcebf7;   --c-work-ink: #1d4f7a;
+  --c-study: #ece4f6;  --c-study-ink: #5a3a86;
+  --c-write: #f8ecd6;  --c-write-ink: #7a5212;
+  --c-build: #dff0e9;  --c-build-ink: #1e6448;
+  --c-music: #f6e1e4;  --c-music-ink: #84303e;
+  --f-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --f-body: "Source Sans 3", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11171c; --surface: #172028; --ink: #e4ebef; --muted: #98a8b2; --rule: #2a3741;
+  --accent: #5cc7b9; --accent-soft: #173431;
+  --c-work: #1b2f40; --c-work-ink: #9cc8ec;
+  --c-study: #2a2238; --c-study-ink: #c9b3ea;
+  --c-write: #352a17; --c-write-ink: #e8c88d;
+  --c-build: #1a3329; --c-build-ink: #9ad9bd;
+  --c-music: #3a2228; --c-music-ink: #eeaab6;
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #11171c; --surface: #172028; --ink: #e4ebef; --muted: #98a8b2; --rule: #2a3741;
+  --accent: #5cc7b9; --accent-soft: #173431;
+  --c-work: #1b2f40; --c-work-ink: #9cc8ec;
+  --c-study: #2a2238; --c-study-ink: #c9b3ea;
+  --c-write: #352a17; --c-write-ink: #e8c88d;
+  --c-build: #1a3329; --c-build-ink: #9ad9bd;
+  --c-music: #3a2228; --c-music-ink: #eeaab6;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 17px; line-height: 1.6;
+}
+.wrap {
+  max-width: 880px; margin: 0 auto;
+  padding-block: 48px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 56px;
+}
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; text-wrap: balance; margin: 0; line-height: 1.2; }
+h2 { font-size: 1.75rem; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.2rem; }
+p { margin: 0; max-width: 68ch; }
+section { display: grid; gap: 20px; scroll-margin-top: 16px; }
+.mono { font-family: var(--f-mono); font-size: 0.82rem; letter-spacing: 0.01em; }
+.label { font-family: var(--f-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+/* Header */
+header { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; }
+.seal {
+  width: 112px; height: 112px; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 2px solid var(--accent); outline: 1px solid var(--accent); outline-offset: 4px;
+  background: var(--accent-soft); color: var(--accent);
+  font-family: var(--f-display); font-size: 3.2rem; line-height: 1;
+}
+.head-text { display: grid; gap: 6px; min-width: 0; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.1rem); }
+.tagline { color: var(--muted); font-size: 1.05rem; }
+.links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 6px; font-family: var(--f-mono); font-size: 0.85rem; }
+.links a { text-decoration: none; }
+.links a:hover { text-decoration: underline; }
+@media (max-width: 560px) {
+  header { grid-template-columns: 1fr; gap: 18px; }
+  .seal { width: 84px; height: 84px; font-size: 2.4rem; }
+}
+
+/* Status board */
+.status { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.status li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 12px; align-items: baseline; }
+.status li > span:last-child { min-width: 0; }
+@media (max-width: 560px) { .status li { grid-template-columns: 1fr; gap: 0; } }
+
+/* Experience */
+.entries { display: grid; gap: 22px; }
+.entry { display: grid; grid-template-columns: 9.5rem 1fr; gap: 12px; }
+.entry > div { min-width: 0; display: grid; gap: 6px; }
+.entry ul { margin: 2px 0 0; padding-left: 1.1em; display: grid; gap: 4px; max-width: 68ch; }
+.entry .where { color: var(--muted); }
+@media (max-width: 560px) { .entry { grid-template-columns: 1fr; gap: 2px; } }
+.metric { font-family: var(--f-mono); font-weight: 600; color: var(--accent); }
+
+/* Project cards */
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 760px) { .cards { grid-template-columns: 1fr; } }
+.card {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 18px; display: grid; gap: 8px; align-content: start;
+}
+.card p { font-size: 0.97rem; }
+.card .foot { font-family: var(--f-mono); font-size: 0.8rem; color: var(--muted); }
+
+/* Writing list */
+.writing { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.writing li { display: grid; grid-template-columns: 9.5rem 1fr; gap: 12px; }
+.writing li > div { min-width: 0; }
+.writing .note { color: var(--muted); font-size: 0.95rem; }
+@media (max-width: 560px) { .writing li { grid-template-columns: 1fr; gap: 0; } }
+
+/* Timeline */
+.legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-block; font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 3px; white-space: nowrap;
+}
+.k-work  { background: var(--c-work);  color: var(--c-work-ink); }
+.k-study { background: var(--c-study); color: var(--c-study-ink); }
+.k-write { background: var(--c-write); color: var(--c-write-ink); }
+.k-build { background: var(--c-build); color: var(--c-build-ink); }
+.k-music { background: var(--c-music); color: var(--c-music-ink); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.95rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--f-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+td.when { font-family: var(--f-mono); font-size: 0.82rem; white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--muted); }
+tr.now td { background: var(--accent-soft); }
+
+footer { border-top: 1px solid var(--rule); padding-top: 18px; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="seal" aria-hidden="true">A</div>
+    <div class="head-text">
+      <h1>Akshay</h1>
+      <div class="tagline">Senior Production Engineer at Meta · Pleasanton, California</div>
+      <nav class="links" aria-label="Quick links">
+        <a href="#about">[About]</a>
+        <a href="#work">[Work]</a>
+        <a href="#writing">[Writing]</a>
+        <a href="#timeline">[Timeline]</a>
+        <a href="https://scribblingbyakshay.substack.com" target="_blank" rel="noopener">[Substack]</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="about" aria-labelledby="about-h">
+    <ul class="status">
+      <li><span class="label">Day job</span><span>Keeping large-scale storage and AI infrastructure healthy at Meta, 8+ years in SRE.</span></li>
+      <li><span class="label">Writing</span><span><em>Practitioner's Lens</em>, close readings of real production incidents. Poetry on the side.</span></li>
+      <li><span class="label">Playing</span><span>Acoustic guitar, original Hindi songs, open mics around the Bay.</span></li>
+    </ul>
+
+    <h2 id="about-h">About</h2>
+    <p>I'm a site reliability engineer who likes the hard part of production: the hour when a system is misbehaving and nobody knows why yet. I've spent most of my career on distributed storage (ZippyDB and RocksDB), AI infrastructure, and release pipelines, and lately on autonomous agents that can do some of that diagnosis themselves.</p>
+    <p>I think AI is a once-in-a-decade shift for how software gets operated, so I'm spending my evenings learning it properly, building with it, and writing about what I see. Outside of systems, I'm a published poet and I write songs.</p>
+  </section>
+
+  <section id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Work &amp; education</h2>
+    <div class="entries">
+      <div class="entry">
+        <span class="label">Meta</span>
+        <div>
+          <h3>Senior Production Engineer</h3>
+          <span class="where">Menlo Park, CA</span>
+          <ul>
+            <li>Distributed storage reliability on ZippyDB and RocksDB.</li>
+            <li>AI infrastructure, disaster-recovery tooling and autonomous agents for operations.</li>
+            <li>Built an LLM-powered release assistant that made releases <span class="metric">40%</span> faster with a <span class="metric">9&nbsp;min</span> MTTR.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="entry">
+        <span class="label">2018</span>
+        <div>
+          <h3>MS, Electrical Engineering</h3>
+          <span class="where">University of Southern California</span>
+        </div>
+      </div>
+      <div class="entry">
+        <span class="label">2012 – 2016</span>
+        <div>
+          <h3>B.Tech, Engineering Physics (Electronics)</h3>
+          <span class="where">Delhi Technological University</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="writing" aria-labelledby="writing-h">
+    <h2 id="writing-h">Writing &amp; music</h2>
+    <ul class="writing">
+      <li>
+        <span class="label">Postmortem #2</span>
+        <div><a href="https://www.linkedin.com/feed/update/urn:li:activity:7488500906263461890/" target="_blank" rel="noopener">The April 2026 Claude Code degradation</a>
+          <div class="note">Practitioner's Lens. Substack and LinkedIn.</div></div>
+      </li>
+      <li>
+        <span class="label">Postmortem #1</span>
+        <div><a href="https://www.linkedin.com/feed/update/urn:li:activity:7455529501846990849/" target="_blank" rel="noopener">The Cloudflare outage of Nov 18, 2025</a>
+          <div class="note">Practitioner's Lens. LinkedIn.</div></div>
+      </li>
+      <li>
+        <span class="label">Book</span>
+        <div><em>Stitching Dreams Together</em>
+          <div class="note">Poetry, BookLeaf Publishing. About not giving up on a dream one step before it arrives. Print and ebook.</div></div>
+      </li>
+      <li>
+        <span class="label">Song</span>
+        <div><em>Would You Like the Life So Known</em>
+          <div class="note">Started as the poem “Predicting Future,” reworked into a song for open mic.</div></div>
+      </li>
+      <li>
+        <span class="label">Newsletter</span>
+        <div><a href="https://scribblingbyakshay.substack.com" target="_blank" rel="noopener">Scribbling by Akshay</a>
+          <div class="note">Incident deep dives, essays and the occasional travel piece.</div></div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="timeline" aria-labelledby="timeline-h">
+    <h2 id="timeline-h">Timeline</h2>
+    <div class="legend" aria-label="Legend">
+      <span class="chip k-work">Work</span>
+      <span class="chip k-study">Study</span>
+      <span class="chip k-write">Writing</span>
+      <span class="chip k-music">Music</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">When</th><th scope="col">What</th><th scope="col">Type</th></tr></thead>
+        <tbody>
+          <tr><td class="when">Aug 2026</td><td>Berkeley Agentic AI Summit</td><td><span class="chip k-study">Study</span></td></tr>
+          <tr><td class="when">Jul 2026</td><td>Practitioner's Lens #2: Claude Code degradation</td><td><span class="chip k-write">Writing</span></td></tr>
+          <tr><td class="when">Jul 2026</td><td>First original song performed at open mic</td><td><span class="chip k-music">Music</span></td></tr>
+          <tr><td class="when">Nov 2025</td><td>Practitioner's Lens #1: Cloudflare outage</td><td><span class="chip k-write">Writing</span></td></tr>
+          <tr><td class="when">2018 –</td><td>SRE / Production Engineering at Meta</td><td><span class="chip k-work">Work</span></td></tr>
+          <tr><td class="when">2018</td><td>MS EE, University of Southern California</td><td><span class="chip k-study">Study</span></td></tr>
+          <tr><td class="when">2012 – 2016</td><td>B.Tech, Delhi Technological University</td><td><span class="chip k-study">Study</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <span class="mono">Last updated Nov 8, 2026</span>
+    <span class="mono">One static file. No pager required.</span>
+  </footer>
+
+</div>
+</body>
+</html>
